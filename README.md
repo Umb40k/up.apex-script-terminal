@@ -20,11 +20,9 @@ sfdx force:apex:log:tail --color = launch a terminal and show all executed code
 
 save the log on the debug\log folder of the Salesforce project
 
-**
 
 ## Prerequisites
 
-**
 
 Before you set up Apex Script terminal for VS Code, make sure that you have these essentials.
 
