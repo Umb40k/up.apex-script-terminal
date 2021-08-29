@@ -30,7 +30,7 @@ Visual Studio Code v1.26 or later
 
 How to use?
 
-To start the extension show command palette and select SFDX Start Apex Terminal: Enter Apex Code:
+To start the extension show command palette and select SFDX Start Apex Terminal: Enter Apex Code
 
 ![2](https://user-images.githubusercontent.com/15142774/131256727-a4be8b97-40b3-485a-b949-6fac81ade93e.PNG)
 
