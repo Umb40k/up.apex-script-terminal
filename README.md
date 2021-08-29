@@ -1,30 +1,37 @@
-Salesforce Apex Script terminal VS Code
+## Salesforce Apex Script terminal VS Code
+
+
 
 This extension provides a User Interface to run Apex scripts from vscode without access to the org developer console, the code editor is made with ACE Editor Link: https://ace.c9.io/, the editor provide syntax highlighter for Apex language, the extension use the follow DX commands:
 
-Execute or Execute Highlighted
+**Execute or Execute Highlighted**
+
 sfdx force:apex:execute -f = execute the code
 
-Open USER_DEBUG only log on Terminal
+**Open USER_DEBUG only log on Terminal**
 
 sfdx force:apex:log:tail --color | grep USER_DEBUG = launch a terminal and show all executed code debug (only user debug)
 
-Open FINEST log on Terminal
+**Open FINEST log on Terminal**
 
 sfdx force:apex:log:tail --color = launch a terminal and show all executed code
 
-Open Log checkbox
+**Open Log checkbox**
 
 save the log on the debug\log folder of the Salesforce project
 
-Prerequisites
+**
+
+## Prerequisites
+
+**
 
 Before you set up Apex Script terminal for VS Code, make sure that you have these essentials.
 
 Salesforce Extensions for Visual Studio Code
 Visual Studio Code v1.59.0 or later
 
-How to use?
+## How to use?
 
 To start the extension show command palette and select SFDX Start Apex Terminal: Enter Apex Code
 
