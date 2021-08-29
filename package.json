@@ -1,13 +1,26 @@
 {
 	"name": "apex-remote-terminal",
-	"displayName": "Apex Remote Terminal",
-	"description": "",
-	"version": "0.0.1",
+	"displayName": "Salesforce Apex Remote Terminal",
+	"description": "Remote Apex code terminal",
+	"version": "1.0.0",
+	"icon": "images/icon.png",
+	"publisher": "Umberto Piscopo",
+	"repository": "https://github.com/Umb40k/up.apex-script-terminal",
 	"engines": {
 		"vscode": "^1.59.0"
 	},
 	"categories": [
+		"Extension Packs",
 		"Other"
+	],
+	"keywords": [
+		"sfdx",
+		"salesforcedx",
+		"sfdx apex code",
+		"salesforce",
+		"salesforce apex code editor",
+		"salesforce console apex script",
+		"salesforce script"
 	],
 	"activationEvents": [
 		"onCommand:apex-remote.terminal"
@@ -20,21 +33,13 @@
 				"title": "SFDX Start Apex Terminal: Enter Apex Code",
 				"when": "sfdx:project_opened"
 			}
-		],
-		"menus": {
-			"editor/context": [
-				{
-					"command": "apex-remote.runSelectedText",
-					"group": "bookmarks",
-					"when": "sfdx:project_opened && editorHasSelection"
-				}
-			]
-		}
+		]
 	},
 	"scripts": {
-		"lint": "eslint .",
-		"pretest": "npm run lint",
-		"test": "node ./test/runTest.js"
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -w -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",

@@ -17,16 +17,12 @@ Open Log checkbox
 
 save the log on the debug\log folder of the Salesforce project
 
-
-
 Prerequisites
 
 Before you set up Apex Script terminal for VS Code, make sure that you have these essentials.
 
 Salesforce Extensions for Visual Studio Code
-Visual Studio Code v1.26 or later
-
-
+Visual Studio Code v1.59.0 or later
 
 How to use?
 
@@ -38,14 +34,6 @@ Enter your Apex code into the editor and click execute for run all code on the e
 
 ![6](https://user-images.githubusercontent.com/15142774/131256867-8df835f8-e8a0-4a9e-85ad-fc2194964f35.PNG)
 
-
 To save and show the log select the checkbox:
 
 ![5](https://user-images.githubusercontent.com/15142774/131256809-7d1c1b45-73f9-4bc7-b1cb-7d71d962e808.PNG)
-
-
-
-
-
-
-

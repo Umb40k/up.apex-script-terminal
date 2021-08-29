@@ -1,1 +1,0 @@
-        List<Account> accList=[SELECT Id, Name, AccountNumber FROM Account ];
