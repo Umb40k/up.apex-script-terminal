@@ -1,65 +1,51 @@
-# anonymous-apex README
+Salesforce Apex Script terminal VS Code
 
-This is the README for your extension "anonymous-apex". After writing up a brief description, we recommend including the following sections.
+This extension provides a User Interface to run Apex scripts from vscode without access to the org developer console, the code editor is made with ACE Editor Link: https://ace.c9.io/, the editor provide syntax highlighter for Apex language, the extension use the follow DX commands:
 
-## Features
+Execute or Execute Highlighted
+sfdx force:apex:execute -f = execute the code
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Open USER_DEBUG only log on Terminal
 
-For example if there is an image subfolder under your extension project workspace:
+sfdx force:apex:log:tail --color | grep USER_DEBUG = launch a terminal and show all executed code debug (only user debug)
 
-\!\[feature X\]\(images/feature-x.png\)
+Open FINEST log on Terminal
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+sfdx force:apex:log:tail --color = launch a terminal and show all executed code
 
-## Requirements
+Open Log checkbox
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+save the log on the debug\log folder of the Salesforce project
 
-## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
-For example:
+Prerequisites
 
-This extension contributes the following settings:
+Before you set up Apex Script terminal for VS Code, make sure that you have these essentials.
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+Salesforce Extensions for Visual Studio Code
+Visual Studio Code v1.26 or later
 
-## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
 
-## Release Notes
+How to use?
 
-Users appreciate release notes as you update your extension.
+To start the extension show command palette and select SFDX Start Apex Terminal: Enter Apex Code:
 
-### 1.0.0
+![2](https://user-images.githubusercontent.com/15142774/131256727-a4be8b97-40b3-485a-b949-6fac81ade93e.PNG)
 
-Initial release of ...
+Enter your Apex code into the editor and click execute for run all code on the edior or execute Highlighted only for the selected row:
 
-### 1.0.1
+![6](https://user-images.githubusercontent.com/15142774/131256867-8df835f8-e8a0-4a9e-85ad-fc2194964f35.PNG)
 
-Fixed issue #.
 
-### 1.1.0
+To save and show the log select the checkbox:
 
-Added features X, Y, and Z.
+![5](https://user-images.githubusercontent.com/15142774/131256809-7d1c1b45-73f9-4bc7-b1cb-7d71d962e808.PNG)
 
------------------------------------------------------------------------------------------------------------
 
-## Working with Markdown
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
 
-### For more information
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
-**Enjoy!**
