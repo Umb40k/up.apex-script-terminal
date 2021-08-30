@@ -193,252 +193,250 @@ vscode.window.showTextDocument(pathFile, {
 
 function getWebviewContent() {
     return `<!DOCTYPE html>
-		<html>
-		   <head>
-		      <meta charset="UTF-8">
-		      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-			  <style type="text/css">
-				 .button {
-				 padding: 15px 25px;
-				 font-size: 24px;
-				 text-align: center;
-				 cursor: pointer;
-				 outline: none;
-				 color: #17A0DB;
-				 background-color: #04AA6D;
-				 border: none;
-				 border-radius: 15px;
-				 }
-				 .button:hover {background-color: #3e8e41}
-				 .button:active {
-				 background-color: #17A0DB;
-				 transform: translateY(4px);
-				 }
-				 #editor-container {
-				 font: 14px/1.4 sans-serif;
-				 color: white;
-				 border: 7px solid #17A0DB;
-				 display: inline-block;
-				 background-color: white;
-				 }
-				 #editor-menu {
-				 padding: 15px;
-				 }
-				 #editor-menu button {
-				 font: 14px/1.4 sans-serif;
-				 border: 3px solid #17A0DB;
-				 background-color: white;
-				 padding: 10px;
-				 margin: 0 10px 10px 0;
-				 float: right;
-				 }
-				 .highight-menu {
-				 background-color: #777777 !important;
-				 color: white !important;
-				 }
-				 #editor-text {
-				 width: 1000px;
-				 height: 500px;
-				 border-top: 6px solid #17A0DB;
-				 border-left: 6px solid #17A0DB;
-				 border-right: 6px solid #17A0DB;
-				 border-bottom: 6px solid #17A0DB;
-				 outline: none;
-				 padding: 10px;
-				 overflow: auto;
-				 background-color: white;
-				 font: 1rem 'Fira Sans', sans-serif;
-				 font-color: black;
-				 }
-				 #editor-text img {
-				 max-width: 600px;
-				 }
-				 .title {
-				 font-size: 1.67em;
-				 font-weight: bold;
-				 text-align: center;
-				 }
-				 #editor {
-				 width: 770px;
-				 height: 570px;
-				 border-bottom: 2px solid #17A0DB;
-				 }
-				 textarea[name="editor"] {
-				 display: none;
-				 }
-				 .as-console-wrapper {
-				 display: none !important;
-				 }
-				 .menu-btn {
-				 padding: 15px 25px;
-				 font-size: 24px;
-				 text-align: center;
-				 cursor: pointer;
-				 outline: none;
-				 color: #17A0DB;
-				 background-color: #17A0DB;
-				 border: none;
-				 border-radius: 15px;
-				 }
-				 .dropdown-menu {
-				 position: relative;
-				 display: inline-block;
-				 padding: 2px 35px;
-				 }
-				 .menu-content {
-				 display: none;
-				 position: absolute;
-				 bottom: 50px;
-				 background-color: #017575;
-				 min-width: 160px;
-				 z-index: 1;
-				 }
-				 .links {
-				 color: rgb(255, 255, 255);
-				 padding: 12px 16px;
-				 text-decoration: none;
-				 display: block;
-				 font-size: 12px;
-				 font-weight: bold;
-				 border-bottom: 1px solid black;
-				 background-color: #17A0DB;
-				 }
-				 .links:hover {
-				 background-color: #17A0DB;
-				 color:#c3c5c6;
-				 left:50px;
-				 }
-				 .dropdown-menu:hover .menu-content {
-				 display: inline-block;
-				 }
-				 .dropdown-menu:hover .menu-btn {
-				 background-color: #3e8e41;
-				 }
-				 .myCheckbox input {
-				 position: relative;
-				 left:170px;
-				 bottom:30px;
-				 background-color: #04AA6D;
-				 border: 10px solid #17A0DB;
-				 border-radius: 2px;
-				 }
-				 .label{
-				 color: #17A0DB;
-				 position: relative;
-				 left:170px;
-				 bottom:30px;
-				 }
-			  </style>
-			  <link href="prism.css" rel="stylesheet" />
-		   </head>
-		   <body oncontextmenu="return false;">
-			  <div id="editor-container" content="width=device-width, initial-scale=1.0">
-				 <div id="editor" class="editor"  contenteditable="true" ></div>
-				 <div id="editor-menu">
-					<div class="dropdown-menu">
-					   <button class="menu-btn">Logs Option </button>
-					   <div class="menu-content">
-						  <a class="links"  id="userDebug" onclick="userDebugT()">Open USER_DEBUG only log on Terminal</a>
-						  <a class="links"  id="finestDebug" onclick="finestDebugT()">Open FINEST log on Terminal</a>
-					   </div>
-					</div>
-					<button class="button" id="executehigh-button" title="Execute Highlighted" onclick="executeHigh()">Execute Highlighted</button>
-					<button class="button" id="execute-button" title="Execute" onClick="execute()">Execute</button>
-					<label class="myCheckbox">
-					<input type="checkbox" name="log" id="checkboxLog" />
-					<label class="label" for="test">Open Log</label>
-					</label>
-				 </div>
-			  </div>
-			  <script src="https://ajaxorg.github.io/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
-			  <script>
-			  var dragging = false;
-              var wpoffset = 0;
-				 var editor = ace.edit('editor');
-					   var txtAra = document.querySelector('textarea[name="editor"]');
-					   var jsbOpts = {
-					   indent_size : 5
-					   };
+	<html>
+	   <head>
+		  <meta charset="UTF-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		  <style type="text/css">
+			 .button {
+			 padding: 15px 25px;
+			 font-size: 24px;
+			 text-align: center;
+			 cursor: pointer;
+			 outline: none;
+			 color: #17A0DB;
+			 background-color: #04AA6D;
+			 border: none;
+			 border-radius: 15px;
+			 }
+			 .button:hover {background-color: #3e8e41}
+			 .button:active {
+			 background-color: #17A0DB;
+			 transform: translateY(4px);
+			 }
+			 #editor-container {
+			 font: 14px/1.4 sans-serif;
+			 color: white;
+			 border: 7px solid #17A0DB;
+	 display:inline-block;
+	 position:relative;
+	 background-color: white;
+	 width:98%;
+	 height: 100%;
+	  min-width:600px;
+			 }
+			 #editor-menu {
+			 padding: 10px;
+	 padding-top: 20px;
+			 }
+			 #editor-menu button {
+			 font: 14px/1.4 sans-serif;
+			 border: 3px solid #17A0DB;
+			 background-color: white;
+			 padding: 10px;
+			 margin: 0 10px 10px 0;
+			 float: right;
+			 }
+			 .highight-menu {
+			 background-color: #777777 !important;
+			 color: white !important;
+			 }
+			 .title {
+			 font-size: 1.67em;
+			 font-weight: bold;
+			 text-align: center;
+			 }
+			 #editor {
+	 position: relative;
+	 height:500px;
+			 border-bottom: 2px solid #17A0DB;
+			 }
+			 textarea[name="editor"] {
+			 display: none;
+			 }
+			 .as-console-wrapper {
+			 display: none !important;
+			 }
+			 .menu-btn {
+			 padding: 15px 25px;
+			 font-size: 24px;
+			 text-align: center;
+			 cursor: pointer;
+			 outline: none;
+			 color: #17A0DB;
+			 background-color: #17A0DB;
+			 border: none;
+			 border-radius: 15px;
+			 }
+			 .dropdown-menu {
+			 position: relative;
+			 display: inline-block;
+			 padding: 2px 35px;
+			 }
+			 .menu-content {
+			 display: none;
+			 position: absolute;
+			 bottom: 50px;
+			 background-color: #017575;
+			 min-width: 160px;
+			 z-index: 1;
+			 }
+			 .links {
+			 color: rgb(255, 255, 255);
+			 padding: 12px 16px;
+			 text-decoration: none;
+			 display: block;
+			 font-size: 12px;
+			 font-weight: bold;
+			 border-bottom: 1px solid black;
+			 background-color: #17A0DB;
+			 }
+			 .links:hover {
+			 background-color: #17A0DB;
+			 color:#c3c5c6;
+			 left:50px;
+			 }
+			 .dropdown-menu:hover .menu-content {
+			 display: inline-block;
+			 }
+			 .dropdown-menu:hover .menu-btn {
+			 background-color: #3e8e41;
+			 }
+			 .myCheckbox input {
+			 background-color: #04AA6D;
+			 border: 10px solid #17A0DB;
+			 border-radius: 2px;
+			 }
+			 .label{
+			 color: #17A0DB;
+			 }
+	 .checkbox_container{
+			 position: relative;
+			 display: inline-block;
+	 padding-right:10px;
+	 padding-top:14px;
+			 float: right;
+			 }
+		  </style>
+		  <link href="prism.css" rel="stylesheet" />
+	   </head>
+	   <body oncontextmenu="return false;">
+		  <div id="editor-container" content="width=device-width, initial-scale=1.0">
+			 <div id="editor" class="editor"  contenteditable="true" ></div>
+			 <div id="editor-menu">
 
-				 editor.setTheme("ace/theme/chrome");
-				 editor.getSession().setMode({path:"ace/mode/apex", inline: true });
-				 editor.setOptions({
-				 fontSize: "14pt",
-				 enableBasicAutocompletion: true,
-				 showPrintMargin: false
-				 });
+				<div class="dropdown-menu">
 
-				 const vscode = acquireVsCodeApi();
-				 function execute() {
-				 let text1 = editor.getValue();
-				 let box;
-				 if (document.getElementById('checkboxLog').checked) {
-				 box = "true";
-				 } else {
-				 box = "false";
-				 }
-				 vscode.postMessage({
-				 command: 'execute',
-				 data: text1,
-				 token: box
-				 })
-				 window.addEventListener('message', event => {
+				   <button class="menu-btn">Logs Option </button>
 
-				 const message = event.data; // The JSON data our extension sent
+				   <div class="menu-content">
 
-				 });
-				 }
-				 function executeHigh() {
-				 let text2 = editor.getSelectedText();
-				 let box2;
-				 if (document.getElementById('checkboxLog').checked) {
-				 box2 = "true";
-				 } else {
-				 box2 = "false";
-				 }
-				 vscode.postMessage({
-				 command: 'executeHigh',
-				 data: text2,
-				 token: box2
-				 })
-				 window.addEventListener('message', event => {
+					  <a class="links"  id="userDebug" onclick="userDebugT()">Open USER_DEBUG only log on Terminal</a>
+					  <a class="links"  id="finestDebug" onclick="finestDebugT()">Open FINEST log on Terminal</a>
 
-				 const message = event.data; // The JSON data our extension sent
+				   </div>
 
-				 });
-				 }
-				 function userDebugT() {
-				 vscode.postMessage({
-				 command: 'userDebugT'
-				 })
-				 }
-				 function finestDebugT() {
-				 vscode.postMessage({
-				 command: 'finestDebugT'
-				 })
-				 }
+				</div>
 
 
-				 // Main Logic
-				 setTimeout(formatCode, 500);
+				<button class="button" id="executehigh-button" title="Execute Highlighted" onclick="executeHigh()">Execute Highlighted</button>
 
-				 // Functions
-				 function syncEditor() {
-				 editor.getSession().setValue(txtAra.value);
-				 }
-				 function commitChanges() {
-				 txtAra.value = editor.getSession().getValue();
-				 }
-				 function formatCode() {
-				 var session = editor.getSession();
-				 session.setValue(js_beautify(session.getValue(), jsbOpts));
-				 }
+				<button class="button" id="execute-button" title="Execute" onClick="execute()">Execute</button>
+			  <div class="checkbox_container">
+						  <input type="checkbox" name="log" id="checkboxLog" /><label class="label" for="test">Open Log</label></div>
+
+
+			 </div>
+		  </div>
+		  <script src="https://ajaxorg.github.io/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
+		  <script>
+		  var dragging = false;
+		  var wpoffset = 0;
+			 var editor = ace.edit('editor');
+				   var txtAra = document.querySelector('textarea[name="editor"]');
+				   var jsbOpts = {
+				   indent_size : 5
+				   };
+
+			 editor.setTheme("ace/theme/chrome");
+			 editor.getSession().setMode({path:"ace/mode/apex", inline: true });
+			 editor.setOptions({
+			 fontSize: "14pt",
+			 enableBasicAutocompletion: true,
+			 showPrintMargin: false
+			 });
+
+			 const vscode = acquireVsCodeApi();
+			 function execute() {
+			 let text1 = editor.getValue();
+			 let box;
+			 if (document.getElementById('checkboxLog').checked) {
+			 box = "true";
+			 } else {
+			 box = "false";
+			 }
+			 vscode.postMessage({
+			 command: 'execute',
+			 data: text1,
+			 token: box
+			 })
+			 window.addEventListener('message', event => {
+
+			 const message = event.data; // The JSON data our extension sent
+
+			 });
+			 }
+			 function executeHigh() {
+			 let text2 = editor.getSelectedText();
+			 let box2;
+			 if (document.getElementById('checkboxLog').checked) {
+			 box2 = "true";
+			 } else {
+			 box2 = "false";
+			 }
+			 vscode.postMessage({
+			 command: 'executeHigh',
+			 data: text2,
+			 token: box2
+			 })
+			 window.addEventListener('message', event => {
+
+			 const message = event.data; // The JSON data our extension sent
+
+			 });
+			 }
+			 function userDebugT() {
+			 vscode.postMessage({
+			 command: 'userDebugT'
+			 })
+			 }
+			 function finestDebugT() {
+			 vscode.postMessage({
+			 command: 'finestDebugT'
+			 })
+			 }
+
+
+			 // Main Logic
+			 setTimeout(formatCode, 500);
+
+			 // Functions
+			 function syncEditor() {
+			 editor.getSession().setValue(txtAra.value);
+			 }
+			 function commitChanges() {
+			 txtAra.value = editor.getSession().getValue();
+			 }
+			 function formatCode() {
+			 var session = editor.getSession();
+			 session.setValue(js_beautify(session.getValue(), jsbOpts));
+			 }
 
 
 
-			  </script>
-		   </body>
-		</html>`;
+		  </script>
+	   </body>
+	</html>`;
 
 }
 
