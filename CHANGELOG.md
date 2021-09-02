@@ -1,9 +1,23 @@
+
+
 # Change Log
+All notable changes to this project will be documented in this file.
 
-All notable changes to the "anonymous-apex" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [1.5.0] - 2021-09-02
 
-## [Unreleased]
 
-- Initial release
+### Added
+
+-  New option added to setup custom debuglevel,  select **Log option** button e chose a preset or a custom setup through the picklist menu.
+
+### Changed
+
+- To launch the debugLog on the terminal now select the  **Terminals Option** button.
+
+
+## [1.0.1] - 2021-08-30
+
+### Fixed
+
+UI Resize Fixed

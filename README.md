@@ -20,6 +20,11 @@ sfdx force:apex:log:tail --color = launch a terminal and show all executed code
 
 save the log on the debug\log folder of the Salesforce project
 
+**Set DebugLevel**
+
+Create or Update a custom DebugLevel with the piclist menu
+
+
 
 ## Prerequisites
 
@@ -35,10 +40,20 @@ To start the extension show command palette and select SFDX Start Apex Terminal:
 
 ![2](https://user-images.githubusercontent.com/15142774/131256727-a4be8b97-40b3-485a-b949-6fac81ade93e.PNG)
 
-Enter your Apex code into the editor and click execute for run all code on the edior or execute Highlighted only for the selected row:
+Enter your Apex code into the editor and click execute to run all code on the editor or execute Highlighted only for the selected row:
 
-![6](https://user-images.githubusercontent.com/15142774/131256867-8df835f8-e8a0-4a9e-85ad-fc2194964f35.PNG)
+![Catturattttttt](https://user-images.githubusercontent.com/15142774/131915538-904f1784-cd54-458e-9d8b-eb822db923d9.PNG)
 
-To save and show the log select the checkbox:
+To run the script press Execute for the test or Execute Highlighted only for the selected text:
 
-![5](https://user-images.githubusercontent.com/15142774/131256809-7d1c1b45-73f9-4bc7-b1cb-7d71d962e808.PNG)
+![Cattura1111](https://user-images.githubusercontent.com/15142774/131915852-d14857ce-f4c8-4106-92c6-f2384b50ae2e.PNG)
+
+
+To run the script and show the log select the checkbox:
+
+![Cattura99999](https://user-images.githubusercontent.com/15142774/131916083-e0cd45f5-7ad3-4213-bf28-5973b6df0aa6.PNG)
+
+
+To setup a custom log level use the picklist menu under Logs option and press Set DebugLevel:
+
+![Cattura222222](https://user-images.githubusercontent.com/15142774/131916049-56b809b9-9fb0-4a79-b432-51003c020a68.PNG)

@@ -18,12 +18,13 @@ let tBool;
 let tBool2;
 let pathFile;
 const fs = require('fs');
+const child = require("child_process");
 
 function activate(context) {
     context.subscriptions.push(vscode.commands.registerCommand('apex-remote.terminal', () => {
         let execLocation = context.asAbsolutePath('/ConsoleFile/myApexScript.apex');
         pathFile = execLocation.replace(/\\/g, "/");
-        vscode.window.showInformationMessage('Start Apex terminal');
+        //vscode.window.showInformationMessage('Start Apex terminal');
         let panel = vscode.window.createWebviewPanel(
             'openWebview', // Identifies the type of the webview. Used internally
             'Enter Apex Code', // Title of the panel displayed to the user
@@ -43,16 +44,39 @@ function activate(context) {
                             currentdate.getFullYear() + "_" +
                             currentdate.getHours() + "_" +
                             currentdate.getMinutes() + "_" + currentdate.getSeconds();
-                        vscode.window.showInformationMessage('Apex script launched');
                         fs.writeFileSync(pathFile, message.data, 'utf8');
-                        sfdxCmd = "sfdx force:apex:execute -f " + pathFile;
-                        terminal = vscode.window.createTerminal("CONSOLE_ScriptRun_" + N_CONSOLE);
+                        sfdxCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX | sfdx force:apex:execute -f " + pathFile;
+						//let tailCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX";
+                        //terminal = vscode.window.createTerminal("CONSOLE_ScriptRun_" + N_CONSOLE);
                         if (message.token === "true") {
+							let command = message.text;
+
+
                             let nameFile = "./.sfdx/tools/debug/logs/APEX_CODE_LOG_" + dateTime + ".log";
                             let nameFileToOpen = "/.sfdx/tools/debug/logs/APEX_CODE_LOG_" + dateTime + ".log";
-                            terminal.sendText(sfdxCmd + " > " + nameFile);
-                            N_CONSOLE++;
-                            setTimeout(function() {
+							command = sfdxCmd + " > " + nameFile;
+							vscode.window.withProgress({
+								location: vscode.ProgressLocation.Notification,
+								title: 'Script launched',
+								cancellable: false
+							}, (progress,token) => {
+								token.onCancellationRequested(() => {
+									return new Error(`User canceled Request`);
+								});
+
+								progress.report({ message: ' in progress....' });
+
+								return new Promise((resolve) => {
+									setTimeout(() => {
+										//executeTail(tailCmd);
+										executeCommand(command);
+										resolve();
+									}, 5000);
+								});
+							})
+
+							//N_CONSOLE++;
+							setTimeout(function() {
                                 const openPath = vscode.Uri.file(vscode.workspace.workspaceFolders[0].uri.path + nameFileToOpen);
                                 vscode.workspace.openTextDocument(openPath).then(doc => {
                                     vscode.window.showTextDocument(doc, {
@@ -61,8 +85,27 @@ function activate(context) {
                                 });
                             }, 7000);
                         } else {
-                            terminal.sendText(sfdxCmd);
-                            N_CONSOLE++;
+							let command = sfdxCmd;
+							vscode.window.withProgress({
+								location: vscode.ProgressLocation.Notification,
+								title: 'Script launched',
+								cancellable: false
+							}, (progress,token) => {
+								token.onCancellationRequested(() => {
+									return new Error(`User canceled Request`);
+								});
+
+								progress.report({ message: ' in progress....' });
+
+								return new Promise((resolve) => {
+									setTimeout(() => {
+										//executeTail(tailCmd);
+										executeCommand(command);
+										resolve();
+									}, 5000);
+								});
+							})
+                           // N_CONSOLE++;
                         }
                         //panel.webview.postMessage({ command: 'test' })
 
@@ -73,16 +116,38 @@ function activate(context) {
                             currentdate.getFullYear() + "_" +
                             currentdate.getHours() + "_" +
                             currentdate.getMinutes() + "_" + currentdate.getSeconds();
-                        vscode.window.showInformationMessage('Apex script launched');
                         fs.writeFileSync(pathFile, message.data, 'utf8');
-                        sfdxCmd = "sfdx force:apex:execute -f " + pathFile;
-                        terminal = vscode.window.createTerminal("CONSOLE_ScriptRun_" + N_CONSOLE);
+                        sfdxCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX | sfdx force:apex:execute -f " + pathFile;
+						//tailCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX | echo "+'"'+"System.debug('Start Trace');" +'"'+ " | sfdx force:apex:execute";
                         if (message.token === "true") {
+							let command = message.text;
+
+
                             let nameFile = "./.sfdx/tools/debug/logs/APEX_CODE_LOG_" + dateTime + ".log";
                             let nameFileToOpen = "/.sfdx/tools/debug/logs/APEX_CODE_LOG_" + dateTime + ".log";
-                            terminal.sendText(sfdxCmd + " > " + nameFile);
-                            N_CONSOLE++;
-                            setTimeout(function() {
+							command = sfdxCmd + " > " + nameFile;
+							vscode.window.withProgress({
+								location: vscode.ProgressLocation.Notification,
+								title: 'Script launched',
+								cancellable: false
+							}, (progress,token) => {
+								token.onCancellationRequested(() => {
+									return new Error(`User canceled Request`);
+								});
+
+								progress.report({ message: ' in progress....' });
+
+								return new Promise((resolve) => {
+									setTimeout(() => {
+										//executeTail(tailCmd);
+										executeCommand(command);
+										resolve();
+									}, 5000);
+								});
+							})
+
+							//N_CONSOLE++;
+							setTimeout(function() {
                                 const openPath = vscode.Uri.file(vscode.workspace.workspaceFolders[0].uri.path + nameFileToOpen);
                                 vscode.workspace.openTextDocument(openPath).then(doc => {
                                     vscode.window.showTextDocument(doc, {
@@ -91,9 +156,37 @@ function activate(context) {
                                 });
                             }, 7000);
                         } else {
-                            terminal.sendText(sfdxCmd);
-                            N_CONSOLE++;
+                            let command = sfdxCmd;
+							vscode.window.withProgress({
+								location: vscode.ProgressLocation.Notification,
+								title: 'Script launched',
+								cancellable: false
+							}, (progress,token) => {
+								token.onCancellationRequested(() => {
+									return new Error(`User canceled Request`);
+								});
+
+								progress.report({ message: ' in progress....' });
+
+								return new Promise((resolve) => {
+									setTimeout(() => {
+										//executeTail(tailCmd);
+										executeCommand(command);
+										resolve();
+									}, 5000);
+								});
+							})
+
+                            //N_CONSOLE++;
                         }
+						return;
+						case 'executeDebugLevel':
+							let sfdxquery = "sfdx force:data:soql:query -q "+'"'+"SELECT Id, MasterLabel FROM DebugLevel where MasterLabel='From_VSCODE_TERMINAL_SFDX'"+'"'+" -t";
+							let SFDX_COMMAND = message.data;
+							vscode.window.showInformationMessage('DebugLevel setup started!');
+
+							 //vscode.window.showInformationMessage('QUERY '+sfdxquery);
+							 executeQuery(sfdxquery,SFDX_COMMAND);
                         //panel.webview.postMessage({ command: 'test' })
                         return;
                     case 'userDebugT':
@@ -127,6 +220,8 @@ function activate(context) {
             undefined,
             context.subscriptions
         );
+
+
     }));
     //Next release
     /*
@@ -190,6 +285,116 @@ vscode.window.showTextDocument(pathFile, {
     });
 
 
+	//vscode.window.onDidWriteTerminalData((e) => {console.log(e.data)})
+
+function executeCommand(command){
+
+	child.exec(command, {
+		maxBuffer: 1024 * 1024 * 6,
+		cwd: vscode.workspace.workspaceFolders[0].uri.fsPath
+	});
+	vscode.window.showInformationMessage('Apex script successful executed!');
+
+
+}
+function executeTail(command){
+
+	return new Promise((resolve) => {
+
+	setTimeout(() => {
+		child.exec(command, {
+			maxBuffer: 1024 * 1024 * 6,
+			cwd: vscode.workspace.workspaceFolders[0].uri.fsPath
+		});
+		resolve();
+	}, 7000);
+});
+
+
+}
+
+function executeQuery(command,SFDX_COMMAND){
+	let result;
+
+	result = child.exec(command, {
+			maxBuffer: 1024 * 1024 * 6,
+			cwd: vscode.workspace.workspaceFolders[0].uri.fsPath
+		});
+		result.stdout.on("data", (dataArg) => {
+			console.log('stdout: ' + dataArg.replace(/\n/g, ''));
+
+			if( dataArg.replace(/\n/g, '') == 'Total number of records retrieved: 0.') {
+				let sfdxLogCmdCreate = "sfdx force:data:record:create -s DebugLevel -t -v "+SFDX_COMMAND;
+				SFDX_COMMAND_FINAL = sfdxLogCmdCreate;
+
+				vscode.window.withProgress({
+					location: vscode.ProgressLocation.Notification,
+					title: 'Create DebugLevel',
+					cancellable: false
+				}, (progress,token) => {
+					token.onCancellationRequested(() => {
+						return new Error(`User canceled Request`);
+					});
+
+					progress.report({ message: ' in progress....' });
+
+					return new Promise((resolve) => {
+						setTimeout(() => {
+							child.exec(SFDX_COMMAND_FINAL, {
+								maxBuffer: 1024 * 1024 * 6,
+								cwd: vscode.workspace.workspaceFolders[0].uri.fsPath
+							});
+								vscode.window.showInformationMessage('DebugLevel setup successful Created!');
+							resolve();
+						}, 5000);
+					});
+				})
+
+
+
+			}else{
+				let sfdxLogCmdUpdate = "sfdx force:data:record:update -s DebugLevel -t -w "+'"'+"MasterLabel='From_VSCODE_TERMINAL_SFDX'"+'"'+" -v "+SFDX_COMMAND;
+				SFDX_COMMAND_FINAL = sfdxLogCmdUpdate;
+
+				vscode.window.withProgress({
+					location: vscode.ProgressLocation.Notification,
+					title: 'Update DebugLevel',
+					cancellable: false
+				}, (progress,token) => {
+					token.onCancellationRequested(() => {
+						return new Error(`User canceled Request`);
+					});
+
+					progress.report({ message: ' in progress....' });
+
+					return new Promise((resolve) => {
+						setTimeout(() => {
+							child.exec(SFDX_COMMAND_FINAL, {
+								maxBuffer: 1024 * 1024 * 6,
+								cwd: vscode.workspace.workspaceFolders[0].uri.fsPath
+							});
+								vscode.window.showInformationMessage('DebugLevel setup successful Updated!');
+							resolve();
+						}, 5000);
+					});
+				})
+
+
+			}
+
+
+		});
+		result.stderr.on("data", (data) => {
+			console.log('stderr: ' + data);
+		});
+
+
+
+
+
+
+}
+
 
 function getWebviewContent() {
     return `<!DOCTYPE html>
@@ -214,6 +419,37 @@ function getWebviewContent() {
 			 background-color: #17A0DB;
 			 transform: translateY(4px);
 			 }
+             .log-button {
+			 padding: 15px 25px;
+			 font-size: 24px;
+			 text-align: center;
+			 cursor: pointer;
+			 outline: none;
+			 color: #17A0DB;
+			 background-color: #04AA6D;
+			 border: none;
+			 border-radius: 15px;
+			 }
+             .picklistmenu{
+              padding-top:  25px;
+              position: relative;
+			 display: inline-block;
+             }
+              .buttonDebug {
+              padding: 10px;
+             font-size: 4px;
+			 cursor: pointer;
+			 outline: none;
+			 color: #17A0DB;
+			 background-color: #04AA6D;
+			 border: none;
+			 border-radius: 15px;
+			 }
+			 .buttonDebug:hover {background-color: #3e8e41}
+			 .buttonDebug:active {
+			 background-color: #17A0DB;
+			 transform: translateY(4px);
+			 }
 			 #editor-container {
 			 font: 14px/1.4 sans-serif;
 			 color: white;
@@ -223,11 +459,20 @@ function getWebviewContent() {
 	 background-color: white;
 	 width:98%;
 	 height: 100%;
-	  min-width:600px;
+	  min-width:1011px;
 			 }
 			 #editor-menu {
 			 padding: 10px;
-	 padding-top: 20px;
+	         padding-top: 20px;
+			 }
+             #picklist-menu {
+             display: none;
+			 }
+             .label-picklist {
+             display: inline-block;
+             font: 1rem 'Fira Sans', sans-serif;
+             color: #17A0DB;
+
 			 }
 			 #editor-menu button {
 			 font: 14px/1.4 sans-serif;
@@ -247,8 +492,8 @@ function getWebviewContent() {
 			 text-align: center;
 			 }
 			 #editor {
-	 position: relative;
-	 height:500px;
+	         position: relative;
+	         height:500px;
 			 border-bottom: 2px solid #17A0DB;
 			 }
 			 textarea[name="editor"] {
@@ -271,7 +516,12 @@ function getWebviewContent() {
 			 .dropdown-menu {
 			 position: relative;
 			 display: inline-block;
-			 padding: 2px 35px;
+			 padding: 2px 2px;
+			 }
+            .log-menu {
+			 position: relative;
+			 display: inline-block;
+			 padding: 2px 2px;
 			 }
 			 .menu-content {
 			 display: none;
@@ -313,21 +563,27 @@ function getWebviewContent() {
 	 .checkbox_container{
 			 position: relative;
 			 display: inline-block;
-	 padding-right:10px;
-	 padding-top:14px;
+	         padding-right:10px;
+	         padding-top:14px;
 			 float: right;
 			 }
 		  </style>
 		  <link href="prism.css" rel="stylesheet" />
 	   </head>
-	   <body oncontextmenu="return false;">
+	   <body oncontextmenu="return false;" style="min-width:920px;">
 		  <div id="editor-container" content="width=device-width, initial-scale=1.0">
+
+
 			 <div id="editor" class="editor"  contenteditable="true" ></div>
 			 <div id="editor-menu">
+				<div class="log-menu">
+
+				   <button class="log-button" Onclick="showMenu()" id="logOption">Logs Option ˅</button>
+                   				</div>
 
 				<div class="dropdown-menu">
 
-				   <button class="menu-btn">Logs Option </button>
+				   <button class="menu-btn">Terminals Option </button>
 
 				   <div class="menu-content">
 
@@ -344,15 +600,91 @@ function getWebviewContent() {
 				<button class="button" id="execute-button" title="Execute" onClick="execute()">Execute</button>
 			  <div class="checkbox_container">
 						  <input type="checkbox" name="log" id="checkboxLog" /><label class="label" for="test">Open Log</label></div>
-
-
+						  <div class="picklistmenu" id="picklist-menu"><div class="label-picklist"> <button class="buttonDebug" id="execute-button-debug" title="Execute" onClick="executeDebugLevel()">Set DebugLevel</button>
+						  <label class="label-picklist" for="Preset">Preset<br>
+						<select name="Preset" id="Preset" onchange="changeSet();">
+							  <option value="SELECT" disabled>--Select--</option>
+							  <option value="NONE">NONE</option>
+							  <option value="FINEST">ALL_FINEST</option>
+							  <option value="ERROR">ALL_ERROR</option>
+							  <option value="WARN">ALL_WARNING</option>
+						  </select>&nbsp;&nbsp;&nbsp;
+						  </label>
+							<label class="label-picklist" for="Database">Database<br>
+						<select name="Database" id="Database">
+							  <option value="NONE">NONE</option>
+							  <option value="INFO">INFO</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>
+							  <label class="label-picklist" for="Callouts">Callouts<br>
+						  <select name="Callouts" id="Callouts">
+						<option value="NONE">NONE</option>
+							  <option value="ERROR">ERROR</option>
+							  <option value="INFO">INFO</option>
+							  <option value="FINER">FINER</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>
+							  <label class="label-picklist" for="Apex">Apex<br>
+						  <select name="Apex" id="Apex">
+							  <option value="NONE">NONE</option>
+							  <option value="ERROR">ERROR</option>
+							  <option value="WARN">WARN</option>
+							  <option value="INFO">INFO</option>
+							  <option value="DEBUG">DEBUG</option>
+							  <option value="FINE">FINE</option>
+							  <option value="FINER">FINER</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>
+							  <label class="label-picklist" for="Validation">Validation<br>
+						  <select name="Validation" id="Validation">
+							 <option value="NONE">NONE</option>
+							  <option value="INFO">INFO</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>
+							  <label class="label-picklist" for="Workflow">Workflow<br>
+						   <select name="Workflow" id="Workflow">
+							  <option value="NONE">NONE</option>
+							  <option value="ERROR">ERROR</option>
+							  <option value="WARN">WARN</option>
+							  <option value="INFO">INFO</option>
+							  <option value="FINE">FINE</option>
+							  <option value="FINER">FINER</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>
+							  <label class="label-picklist" for="Profiling">Profiling<br>
+						   <select name="Profiling" id="Profiling">
+							  <option value="NONE">NONE</option>
+							  <option value="INFO">INFO</option>
+							  <option value="FINE">FINE</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>
+							  <label class="label-picklist" for="Visualforce">Visualforce<br>
+						   <select name="Visualforce" id="Visualforce">
+							  <option value="NONE">NONE</option>
+							  <option value="INFO">INFO</option>
+							  <option value="FINE">FINE</option>
+							  <option value="FINER">FINER</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>
+							  <label class="label-picklist" for="System">System<br>
+						   <select name="System" id="System">
+							  <option value="NONE">NONE</option>
+							  <option value="INFO">INFO</option>
+							  <option value="DEBUG">DEBUG</option>
+							  <option value="FINE">FINE</option>
+							  <option value="FINEST">FINEST</option>
+						  </select></label>&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+  </div>
 			 </div>
 		  </div>
 		  <script src="https://ajaxorg.github.io/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
 		  <script>
+
+          var logOption = false;
 		  var dragging = false;
 		  var wpoffset = 0;
-			 var editor = ace.edit('editor');
+		 var editor = ace.edit('editor');
 				   var txtAra = document.querySelector('textarea[name="editor"]');
 				   var jsbOpts = {
 				   indent_size : 5
@@ -367,8 +699,19 @@ function getWebviewContent() {
 			 });
 
 			 const vscode = acquireVsCodeApi();
+
+
 			 function execute() {
-			 let text1 = editor.getValue();
+				var Database = document.getElementById("Database").value;
+				var Callouts = document.getElementById("Callouts").value;
+				var Apex =  document.getElementById("Apex").value;
+				var Validation = document.getElementById("Validation").value;
+				var Workflow = document.getElementById("Workflow").value;
+				var Profiling = document.getElementById("Profiling").value;
+				var Visualforce = document.getElementById("Visualforce").value;
+				var System = document.getElementById("System").value;
+				let sfdxLogCmd = "sfdx force:data:record:create -s DebugLevel -t -v "+'"'+"DeveloperName=SFDC_DevConsole MasterLabel=From_VSCODE_TERMINAL_SFDX ApexCode="+Apex+" ApexProfiling="+Profiling+" Callout="+Callouts+" Database="+Database+" System="+System+" Validation="+Validation+" Visualforce="+Visualforce+" Workflow="+Workflow+'"';
+				let text1 = editor.getValue();
 			 let box;
 			 if (document.getElementById('checkboxLog').checked) {
 			 box = "true";
@@ -378,33 +721,59 @@ function getWebviewContent() {
 			 vscode.postMessage({
 			 command: 'execute',
 			 data: text1,
-			 token: box
-			 })
+			 token: box,
+				text: sfdxLogCmd
+					 })
 			 window.addEventListener('message', event => {
 
 			 const message = event.data; // The JSON data our extension sent
 
 			 });
 			 }
+
+			 function executeDebugLevel(){
+
+				var Database = document.getElementById("Database").value;
+				var Callouts = document.getElementById("Callouts").value;
+				var Apex =  document.getElementById("Apex").value;
+				var Validation = document.getElementById("Validation").value;
+				var Workflow = document.getElementById("Workflow").value;
+				var Profiling = document.getElementById("Profiling").value;
+				var Visualforce = document.getElementById("Visualforce").value;
+				var System = document.getElementById("System").value;
+				let sfdxLogCmd = '"'+"DeveloperName=SFDC_DevConsole MasterLabel=From_VSCODE_TERMINAL_SFDX ApexCode="+Apex+" ApexProfiling="+Profiling+" Callout="+Callouts+" Database="+Database+" System="+System+" Validation="+Validation+" Visualforce="+Visualforce+" Workflow="+Workflow+'"';
+				vscode.postMessage({
+					command: 'executeDebugLevel',
+					data: sfdxLogCmd,
+							})
+			 }
+
+
 			 function executeHigh() {
-			 let text2 = editor.getSelectedText();
+		     let text2 = editor.getSelectedText();
 			 let box2;
 			 if (document.getElementById('checkboxLog').checked) {
 			 box2 = "true";
 			 } else {
 			 box2 = "false";
 			 }
+
 			 vscode.postMessage({
 			 command: 'executeHigh',
 			 data: text2,
 			 token: box2
 			 })
+
 			 window.addEventListener('message', event => {
 
 			 const message = event.data; // The JSON data our extension sent
 
 			 });
 			 }
+
+
+
+
 			 function userDebugT() {
 			 vscode.postMessage({
 			 command: 'userDebugT'
@@ -433,7 +802,51 @@ function getWebviewContent() {
 			 }
 
 
+function showMenu() {
+  var x = document.getElementById("picklist-menu");
+  var y = document.getElementById("logOption");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+    y.textContent    = "Logs Option ˅";
+    logOption = true;
+  } else {
+    x.style.display = "block";
+        y.textContent    = "Logs Option ˄";
+        logOption = false;
+  }
+}
 
+function changeSet() {
+	if (document.getElementById('Preset').value == 'FINEST'){
+		document.getElementById("Database").value = 'FINEST';
+		document.getElementById("Callouts").value = 'FINEST';
+		document.getElementById("Apex").value = 'FINEST';
+		document.getElementById("Validation").value = 'FINEST';
+		document.getElementById("Workflow").value = 'FINEST';
+		document.getElementById("Profiling").value = 'FINEST';
+		document.getElementById("Visualforce").value = 'FINEST';
+		document.getElementById("System").value = 'FINEST';}
+	  else if (document.getElementById('Preset').value == 'WARN')
+	  {
+		document.getElementById("Apex").value = 'WARN';
+		document.getElementById("Workflow").value = 'WARN';
+	  }else if (document.getElementById('Preset').value == 'ERROR')
+		{
+		document.getElementById("Callouts").value = 'ERROR';
+		document.getElementById("Apex").value = 'ERROR';
+		document.getElementById("Workflow").value = 'ERROR';
+		}else if (document.getElementById('Preset').value == 'NONE')
+		{
+		document.getElementById("Database").value = 'NONE';
+		document.getElementById("Callouts").value = 'NONE';
+		document.getElementById("Apex").value = 'NONE';
+		document.getElementById("Validation").value = 'NONE';
+		document.getElementById("Workflow").value = 'NONE';
+		document.getElementById("Profiling").value = 'NONE';
+		document.getElementById("Visualforce").value = 'NONE';
+		document.getElementById("System").value = 'NONE';}
+
+};
 		  </script>
 	   </body>
 	</html>`;
