@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+# [1.5.1] - 2021-09-02
+
+
+### Added
+
+-  DebugLevel setup SFIXED
+
 
 ## [1.5.0] - 2021-09-02
 

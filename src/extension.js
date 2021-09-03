@@ -39,14 +39,16 @@ function activate(context) {
             message => {
                 switch (message.command) {
                     case 'execute':
+						let tailCmd = "sfdx force:apex:log:tail --debuglevel SFDC_DevConsole";
+						executeTail(tailCmd);
                         var currentdate = new Date();
                         var dateTime = currentdate.getDate() + (currentdate.getMonth() + 1) +
                             currentdate.getFullYear() + "_" +
                             currentdate.getHours() + "_" +
                             currentdate.getMinutes() + "_" + currentdate.getSeconds();
                         fs.writeFileSync(pathFile, message.data, 'utf8');
-                        sfdxCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX | sfdx force:apex:execute -f " + pathFile;
-						//let tailCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX";
+                        sfdxCmd = "sfdx force:apex:execute -f " + pathFile;
+						//let tailCmd = "sfdx force:apex:log:tail --debuglevel SFDC_DevConsole";
                         //terminal = vscode.window.createTerminal("CONSOLE_ScriptRun_" + N_CONSOLE);
                         if (message.token === "true") {
 							let command = message.text;
@@ -117,8 +119,8 @@ function activate(context) {
                             currentdate.getHours() + "_" +
                             currentdate.getMinutes() + "_" + currentdate.getSeconds();
                         fs.writeFileSync(pathFile, message.data, 'utf8');
-                        sfdxCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX | sfdx force:apex:execute -f " + pathFile;
-						//tailCmd = "sfdx force:apex:log:tail --debuglevel From_VSCODE_TERMINAL_SFDX | echo "+'"'+"System.debug('Start Trace');" +'"'+ " | sfdx force:apex:execute";
+                        sfdxCmd = "sfdx force:apex:execute -f " + pathFile;
+						//tailCmd = "sfdx force:apex:log:tail --debuglevel SFDC_DevConsole | echo "+'"'+"System.debug('Start Trace');" +'"'+ " | sfdx force:apex:execute";
                         if (message.token === "true") {
 							let command = message.text;
 
@@ -181,7 +183,7 @@ function activate(context) {
                         }
 						return;
 						case 'executeDebugLevel':
-							let sfdxquery = "sfdx force:data:soql:query -q "+'"'+"SELECT Id, MasterLabel FROM DebugLevel where MasterLabel='From_VSCODE_TERMINAL_SFDX'"+'"'+" -t";
+							let sfdxquery = "sfdx force:data:soql:query -q "+'"'+"SELECT Id, MasterLabel FROM DebugLevel where MasterLabel='SFDC_DevConsole'"+'"'+" -t";
 							let SFDX_COMMAND = message.data;
 							vscode.window.showInformationMessage('DebugLevel setup started!');
 
@@ -299,17 +301,11 @@ function executeCommand(command){
 }
 function executeTail(command){
 
-	return new Promise((resolve) => {
 
-	setTimeout(() => {
 		child.exec(command, {
 			maxBuffer: 1024 * 1024 * 6,
 			cwd: vscode.workspace.workspaceFolders[0].uri.fsPath
 		});
-		resolve();
-	}, 7000);
-});
-
 
 }
 
@@ -351,9 +347,8 @@ function executeQuery(command,SFDX_COMMAND){
 				})
 
 
-
 			}else{
-				let sfdxLogCmdUpdate = "sfdx force:data:record:update -s DebugLevel -t -w "+'"'+"MasterLabel='From_VSCODE_TERMINAL_SFDX'"+'"'+" -v "+SFDX_COMMAND;
+				let sfdxLogCmdUpdate = "sfdx force:data:record:update -s DebugLevel -t -w "+'"'+"MasterLabel='SFDC_DevConsole'"+'"'+" -v "+SFDX_COMMAND;
 				SFDX_COMMAND_FINAL = sfdxLogCmdUpdate;
 
 				vscode.window.withProgress({
@@ -378,7 +373,6 @@ function executeQuery(command,SFDX_COMMAND){
 						}, 5000);
 					});
 				})
-
 
 			}
 
@@ -710,7 +704,7 @@ function getWebviewContent() {
 				var Profiling = document.getElementById("Profiling").value;
 				var Visualforce = document.getElementById("Visualforce").value;
 				var System = document.getElementById("System").value;
-				let sfdxLogCmd = "sfdx force:data:record:create -s DebugLevel -t -v "+'"'+"DeveloperName=SFDC_DevConsole MasterLabel=From_VSCODE_TERMINAL_SFDX ApexCode="+Apex+" ApexProfiling="+Profiling+" Callout="+Callouts+" Database="+Database+" System="+System+" Validation="+Validation+" Visualforce="+Visualforce+" Workflow="+Workflow+'"';
+				let sfdxLogCmd = "sfdx force:data:record:create -s DebugLevel -t -v "+'"'+"DeveloperName=SFDC_DevConsole MasterLabel=SFDC_DevConsole ApexCode="+Apex+" ApexProfiling="+Profiling+" Callout="+Callouts+" Database="+Database+" System="+System+" Validation="+Validation+" Visualforce="+Visualforce+" Workflow="+Workflow+'"';
 				let text1 = editor.getValue();
 			 let box;
 			 if (document.getElementById('checkboxLog').checked) {
@@ -741,7 +735,7 @@ function getWebviewContent() {
 				var Profiling = document.getElementById("Profiling").value;
 				var Visualforce = document.getElementById("Visualforce").value;
 				var System = document.getElementById("System").value;
-				let sfdxLogCmd = '"'+"DeveloperName=SFDC_DevConsole MasterLabel=From_VSCODE_TERMINAL_SFDX ApexCode="+Apex+" ApexProfiling="+Profiling+" Callout="+Callouts+" Database="+Database+" System="+System+" Validation="+Validation+" Visualforce="+Visualforce+" Workflow="+Workflow+'"';
+				let sfdxLogCmd = '"'+"DeveloperName=SFDC_DevConsole MasterLabel=SFDC_DevConsole ApexCode="+Apex+" ApexProfiling="+Profiling+" Callout="+Callouts+" Database="+Database+" System="+System+" Validation="+Validation+" Visualforce="+Visualforce+" Workflow="+Workflow+'"';
 				vscode.postMessage({
 					command: 'executeDebugLevel',
 					data: sfdxLogCmd,

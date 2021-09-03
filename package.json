@@ -2,7 +2,7 @@
 	"name": "apex-remote-terminal",
 	"displayName": "Salesforce Apex Remote Terminal",
 	"description": "Remote Apex code terminal",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"icon": "images/icon.png",
 	"publisher": "UmbertoPiscopo",
 	"repository": "https://github.com/Umb40k/up.apex-script-terminal",
