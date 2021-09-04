@@ -4,6 +4,13 @@
 
 This extension provides a User Interface to run Apex scripts from vscode without access to the org developer console, the code editor is made with ACE Editor Link: https://ace.c9.io/, the editor provide syntax highlighter for Apex language, the extension use the follow DX commands:
 
+### New
+
+To delete local or org user logs press the relative button:
+
+![newww](https://user-images.githubusercontent.com/15142774/132109980-c7621ad2-5053-4fea-937c-429c93a32cdd.PNG)
+
+
 **Execute or Execute Highlighted**
 
 sfdx force:apex:execute -f = execute the code
@@ -22,7 +29,7 @@ save the log on the debug\log folder of the Salesforce project
 
 **Set DebugLevel**
 
-Create or Update a custom DebugLevel with the piclist menu
+Create or Update a custom DebugLevel with the picklist menu
 
 
 
@@ -57,3 +64,4 @@ To run the script and show the log select the checkbox:
 To setup a custom log level use the picklist menu under Logs option and press Set DebugLevel:
 
 ![Cattura222222](https://user-images.githubusercontent.com/15142774/131916049-56b809b9-9fb0-4a79-b432-51003c020a68.PNG)
+![newww](https://user-images.githubusercontent.com/15142774/132109975-22ade1e5-ba4d-4bef-9e18-edf4cdf72f83.PNG)
