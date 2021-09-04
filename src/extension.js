@@ -373,19 +373,6 @@ function deleteLocalLogs() {
 
 
     const openPath = vscode.workspace.workspaceFolders[0].uri.path + "/.sfdx/tools/debug/logs";
-
-    vscode.window.withProgress({
-        location: vscode.ProgressLocation.Notification,
-        title: "Deleting my org Logs: ",
-        cancellable: false
-    }, (progress, token) => {
-        token.onCancellationRequested(() => {
-            console.log("Operation cancelled!: deleteLocalLogs");
-            return new Error(`User canceled Request`);
-        });
-		progress.report({
-                    message: ' in progress....'
-                });
         let result;
         let promise = new Promise(resolve => {
             let pathf = openPath.substring(1);
@@ -415,11 +402,6 @@ function deleteLocalLogs() {
 
         })
         return promise;
-
-    });
-
-
-
 
 }
 
@@ -473,6 +455,7 @@ function getId() {
         if (dataArg.replace(/\n/g, '') == 'Total number of records retrieved: 0.') {
 			vscode.window.showInformationMessage('No org logs found, operation terminated!');
         } else if (dataArg.replace(/\n/g, '') !== 'Total number of records retrieved: 0.') {
+			vscode.window.showInformationMessage('Fetching Logs id from org, wait pls..');
 			child.exec("sfdx force:data:soql:query -q " + '"' + "SELECT Id FROM ApexLog WHERE LogUserId = '" + UserId + "'" + '"' + " -r " + '"' + "csv" + '"' + " > ./.sfdx/tools/debug/logs/apexlog.csv", {
 				maxBuffer: 1024 * 1024 * 6,
 				cwd: vscode.workspace.workspaceFolders[0].uri.fsPath
@@ -496,7 +479,7 @@ function deleteRemoteLogs() {
     let command = "sfdx force:data:bulk:delete -s ApexLog -f ./.sfdx/tools/debug/logs/apexlog.csv";
 	 vscode.window.withProgress({
         location: vscode.ProgressLocation.Notification,
-        title: "Deleting my org Logs: "
+        title: "Deleting my org Logs"
     }, (progress, token) => {
         token.onCancellationRequested(() => {
             console.log("Operation cancelled!: deleteLocalLogs");
@@ -578,7 +561,6 @@ function executeQuery(command, SFDX_COMMAND) {
                         });
                         result2.stderr.on("data", (data) => {
                             console.log('stderr: ' + data);
-                            vscode.window.showErrorMessage(data);
                             resolve();
                         });
                         result2.stdin.on("data", (data) => {
@@ -621,7 +603,6 @@ function executeQuery(command, SFDX_COMMAND) {
                         });
                         result2.stderr.on("data", (data) => {
                             console.log('stderr: ' + data);
-                            vscode.window.showErrorMessage(data);
                             resolve();
                         });
                         result2.stdin.on("data", (data) => {
@@ -696,7 +677,7 @@ function getWebviewContent() {
 				text-align: center;
 				cursor: pointer;
 				outline: none;
-				color: #ff0000;
+				color: #17A0DB;
 				background-color: #04AA6D;
 				border: none;
 				border-radius: 15px;
@@ -911,7 +892,7 @@ function getWebviewContent() {
 				<div class="log-cancel">
 					<button class="log-button-cancelLocal" onclick="deleteRemoteLogs()" id="logLocalCancel" title="Delete my user logs from the org">Delete my org logs</button>
 
-					<button class="log-button-cancelLocal" onclick="deleteLocalLogs()" id="logLocalCancel" title="Delete Local logs file">Delete local Logs</button>
+					<button class="log-button-cancelLocal" onclick="deleteLocalLogs()" id="logLocalCancel" title="Delete Local logs file">Delete local logs</button>
 				</div>
 
 
